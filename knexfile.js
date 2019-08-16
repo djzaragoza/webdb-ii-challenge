@@ -12,16 +12,8 @@ module.exports = {
     migrations: {
       directory: './data/migrations'
     }
-  }
+  },
 
 };
 
-const knex = require('knex');
 
-const config = require('../knexfile.js');
-
-//select development obj from knex file
-const db = knex(config.development);
-
-//export for use in codebase
-module.exports = db;
