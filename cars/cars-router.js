@@ -14,3 +14,15 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.post('/', async (req, res) => {
+    const carInfo = req.body;
+
+    try {
+        const car = await
+        db('cars').insert(carInfo);
+            res.status(201).json({ success: true, car });
+    } catch(err) {
+        res.status(500).json({ success: false, error: 'There was an error while adding the car to the database.', err });
+    }
+});
+
