@@ -26,3 +26,37 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/id:', async (req, res ) => {
+    const{id} = req.params;
+    const update = req.body;
+
+    try {
+        const car = await
+        db('cars').where({id}).update(update);
+        if (car) {
+            res.status(200).json({ success: true, car });
+        } else {
+            res.status(404).json({ success: false, error: `Could not find car with ${id} `});
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, error: 'There was an error while updating the car. ', err });
+    }
+});
+
+router.delete('/:id', async (req, res ) => {
+    const {id} = req.params;
+
+    try {
+        const deleted = await
+        db('cars').where({id}).del();
+        if(deleted) {
+            res.status(204).end();
+        } else {
+            res.status(404).json({ success: false, error: `Could not find car with id ${id} `});
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, error: 'There was an error while deleting the car. '});
+    }
+});
+
+module.exports = router;
